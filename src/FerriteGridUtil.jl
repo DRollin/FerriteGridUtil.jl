@@ -3,6 +3,7 @@ module FerriteGridUtil
 using Ferrite
 using OrderedCollections: OrderedSet
 using Makie: Makie, GeometryBasics
+using Statistics: mean, std
 using HDF5: h5open, create_group, read, close
 
 # Internal helper functions
@@ -10,7 +11,10 @@ include("helper.jl")
 
 # Functions to compute properties of a grid
 include("property.jl")
-export get_moment, get_coordinate_limits, get_interface_between_sets, get_dofs_from_coordinate, get_node_from_coordinate
+export get_moment, get_coordinate_limits,
+    get_interface_between_sets,
+    get_dofs_from_coordinate, get_node_from_coordinate,
+    get_two_point_correlation
 
 # Functions to manipulate a grid
 include("manipulation.jl")

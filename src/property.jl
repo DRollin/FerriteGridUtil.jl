@@ -148,3 +148,50 @@ end
 function get_node_from_coordindate(dh::DofHandler{dim}, x::Vector; radius::Real=1e-3) where {dim}
     return get_node_from_coordinate(dh, Tensors.Tensor{1,dim}(x); radius=radius)
 end
+###################################################################################################
+###################################################################################################
+# TODO: test, document
+function get_two_point_correlation(grid::Grid{dim}, cellset::OrderedSet{Int}, radii; nsamples=4^dim) where {dim}
+        # Determine test points (for now all nodes in the cellset)
+    cells = grid.cells[collect(cellset)]
+    nodeids = OrderedSet{Int}( [n for cell in cells for n in cell.nodes] )
+    points = [n.x for n in grid.nodes[collect(nodeids)]]
+        # Sample around test points
+    unitsamples = _get_unit_sample_points(nsamples, Val(dim))
+    nodecelldicts = Ferrite._get_node_cell_map(grid)
+    pdf = zeros(length(points), length(radii))
+    for (i, p) in enumerate(points)
+        for (j, r) in enumerate(radii)
+            pdf[i,j] = _get_two_point_correlation(p, grid, cellset, r, unitsamples, nodecelldicts)
+        end
+    end
+    return mean(pdf; dims=1)[1,:], std(pdf; dims=1)[1,:]
+end
+get_two_point_correlation(grid, cellset::String, radii; kwargs...) = get_two_point_correlation(grid, getcellset(grid, cellset), radii; kwargs...)
+
+function _get_two_point_correlation(p::Vec{dim,T}, grid::Grid{dim}, cellset::OrderedSet{Int}, r::Real, unitsamples::Vector{Vec{dim,T}}, nodecelldicts) where {dim,T}
+    inset = 0
+    n = length(unitsamples)
+    samples = [s*r + p for s in unitsamples]
+    cells, _ = Ferrite._get_cellcoords(samples, grid, nodecelldicts, 3, false, Ferrite.NewtonLineSearchPointFinder())
+    for cell in cells 
+        if isnothing(cell)
+            n -= 1
+        elseif cell in cellset
+            inset += 1
+        end
+    end
+    return inset / n
+end
+
+function _get_unit_sample_points(nsamples::Integer, ::Val{3})
+    ϕ = π*(sqrt(5) - 1)
+    return [begin
+        y  = 1 - 2*(i-1)/(nsamples-1)
+        ry = sqrt(1 - y^2)
+        θ  = ϕ*i
+        x  = cos(θ)*ry
+        z  = sin(θ)*ry
+        Vec{3}((x,y,z))
+        end for i in 1:nsamples]
+end
