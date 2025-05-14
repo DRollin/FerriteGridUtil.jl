@@ -32,6 +32,9 @@ If you have questions about FerriteGridUtil it is suggested to use the `#ferrite
 [Julia Slack](https://julialang.org/slack/), or the `#Ferrite.jl` stream on
 [Zulip](https://julialang.zulipchat.com/).
 
+## Important
+The documentation below is just a template, FerriteGridUtil.jl is not a registered package!  
+
 ### Installation
 
 To use FerriteGridUtil you first need to install Julia, see <https://julialang.org/> for details.
