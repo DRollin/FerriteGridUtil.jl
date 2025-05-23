@@ -9,7 +9,7 @@
 # -> .stl file for whole grid and only a cellset?
 
 """
-    save(grid::Grid{dim, C}, filepath::String) where {dim, C}
+    save(grid::Grid{dim}, filepath::String)
 
 Saves a grid `grid` in an HDF5 file at `filepath`.
 """

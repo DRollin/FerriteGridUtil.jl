@@ -1,12 +1,12 @@
 """
-    get_moment(grid, order; kwargs...)
+    get_moment(grid, order::Int; kwargs...)
 
 Return the moment of a `grid` or a `cellset`. The `order ∈ {0, 1, 2}` correspondes to the 
 volume, centre of gravity and second moment of inertia respectively. The moment is calculated using the default `QuadratureRule`
 for the cells of the grid.
 
 Keyword arguments:
- - `cellset`: to determin the moment of a subdomain of the grid, the default is the entire `grid`.
+ - `cellset`: to determine the moment of a subdomain of the grid, the default is the entire `grid`.
  - `refpoint`: to change the reference point, the default is the the origin. Only applicable for `order ≥ 1`.
 
 """
@@ -104,7 +104,7 @@ function get_interface_between_sets(grid, set¹::AbstractSet{Int}, set²::String
 end
 
 """
-    get_dofs_from_coordinate(dh::DofHandler, x::Vec, fieldname::Symbol; radius::Float64=1e-12)
+    get_dofs_from_coordinate(dh::DofHandler, x::Vec, fieldname::Symbol; radius=1e-12)
 
 A brute force approach to finding the degrees of freedom corresponding to `fieldname` for a node at coordinate `x`. 
 The node must be within a neighbourhood of radius `radius`. The default `radius` is 1e-12.
@@ -128,7 +128,7 @@ function get_dofs_from_coordinate(dh::DofHandler{dim}, x::Vector, fieldname::Sym
 end
 
 """
-    get_node_from_coordinate(dh::DofHandler, x::Vector; radius::Float64=1e-12)
+    get_node_from_coordinate(dh::DofHandler, x::Vector; radius=1e-12)
 
 Brute force search `grid` for the first node within a neighbourhood of radius `radius` around `x`.
 The node id, a cell id to which the node belongs and a bool to signify a succesful search are returned.
@@ -154,7 +154,7 @@ end
 """
     get_coordinate_from_nodeid(id::Int, grid::Grid)
 
-A brute force approach to find the coordinates for a node `id`, returns `nothing` if no `id` is found.
+A brute force approach to find the coordinates for a node id, returns `nothing` if no id is found.
 """
 function get_coordinate_from_nodeid(id::Int, grid::Grid{dim}) where {dim}
     @assert 1 <= id <= Ferrite.getnnodes(grid)
@@ -172,6 +172,6 @@ end
 
 """
 !!! Limitations
-    The `get_coordinate_from_nodeid()` and `get_dofs_from_coordinate()` functions perform brute force
-    searches, in the case that performance is key alternatives should be explored if possible.
+    `FerriteGridUtil.get_coordinate_from_nodeid` and `FerriteGridUtil.get_dofs_from_coordinate` perform brute force
+    searches, in the case that performance is key alternatives should be explored.
 """

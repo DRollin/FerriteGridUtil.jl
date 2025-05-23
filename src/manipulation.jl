@@ -1,8 +1,7 @@
-# TODO: test, document
 """
     scale_relative(grid::Grid, scalefactor::Real; refpoint::Vec)
 
-Return a grid scaled by `scalefactor` relative to a point `refpoint`. The default `refpoint` is the `[0.0, 0.0, 0.0]`.
+Return a grid scaled by `scalefactor` relative to a point `refpoint`. The default `refpoint` is the `zero(Vec{dim})`.
 """
 function scale_relative(grid::Grid{dim}, scalefactor::Real; refpoint::Vec{dim}=zero(Vec{dim})) where {dim}
     return scale_relative!(deepcopy(grid), scalefactor; refpoint=refpoint)
@@ -11,7 +10,7 @@ end
 """
     scale_relative!(grid::Grid, scalefactor::Real; refpoint::Vec)
 
-Scale the grid `grid` by a factor `scalefactor` relative to a point `refpoint`. The default `refpoint` is `[0.0, 0.0, 0.0]`.
+Scale the grid `grid` by a factor `scalefactor` relative to a point `refpoint`. The default `refpoint` is `zero(Vec{dim})`.
 """
 function scale_relative!(grid::Grid{dim}, scalefactor::Real; refpoint::Vec{dim}=zero(Vec{dim})) where {dim}
     for (i, n) in pairs(grid.nodes)
@@ -20,9 +19,6 @@ function scale_relative!(grid::Grid{dim}, scalefactor::Real; refpoint::Vec{dim}=
     return grid
 end
 
-###################################################################################################
-###################################################################################################
-#TODO: test, document
 """
     shift_by(grid::Grid, shiftvalue::Vec)
 
