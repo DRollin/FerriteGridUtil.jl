@@ -4,17 +4,22 @@ authors = ["David Rollin <d.rollin@tu-braunschweig.de>", "Phil Kreutzheide <p.kr
 version = "1.0.0-DEV"
 
 [deps]
+BenchmarkTools = "6e4b80f9-dd63-53aa-95a3-0cdb28fa8baf"
+CairoMakie = "13f3f980-e62b-5c42-98c6-ff1f3baf88f0"
 Ferrite = "c061ca5d-56c9-439f-9c0e-210fe06d3992"
 HDF5 = "f67ccb44-e63f-5c2f-98bd-6dc0ccc4ba2f"
 Makie = "ee78f7c6-11fb-53f2-987a-cfe4a2b5a57a"
 OrderedCollections = "bac558e1-5e72-5ebc-8fee-abe8a469f55d"
+Statistics = "10745b16-79ce-11e8-11f9-7d13ad32a3b2"
 
 [compat]
+BenchmarkTools = "1.6.0"
 Ferrite = "1.0"
 HDF5 = "0.17"
-Makie = "0.17"
 OrderedCollections = "1.6"
-julia = "1.10"
+Statistics = "1.11.1"
+julia = "1.12"
+Makie = "0.24"
 
 [extras]
 Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
